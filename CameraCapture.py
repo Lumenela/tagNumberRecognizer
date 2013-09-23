@@ -1,6 +1,14 @@
 import cv
 import time
 
+
+class VideoCapturer:
+    def __init__(self, callback):
+        self.callback = callback
+    
+    def startCapturing(self):
+        pass
+
 cv.NamedWindow("camera", 1)
 capture = cv.CreateCameraCapture(0)
 
@@ -19,7 +27,10 @@ else:
 
 while True:
     img = cv.QueryFrame(capture)
+    print type(img)
+    print dir(img)
     cv.ShowImage("camera", img)
+    cv.SaveImage("temp.jpg", img)
     k = cv.WaitKey(10);
     if k == 'f':
         break
