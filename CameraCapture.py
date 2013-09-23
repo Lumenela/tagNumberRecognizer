@@ -9,6 +9,9 @@ class VideoCapturer:
     def startCapturing(self):
         pass
 
+    def finishCapturing(self):
+        pass
+
 if __name__ == "__main__":
     cv.NamedWindow("camera", 1)
     capture = cv.CreateCameraCapture(0)
