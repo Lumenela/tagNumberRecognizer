@@ -23,11 +23,11 @@ class VideoCapturerAndCallBacksTestCase(unittest.TestCase):
 class SeriesCallbackTest(unittest.TestCase):
     def setUp(self):
         self.testfileprefix = "testfileprefix"
-        self.capturer = VideoCapturer(JPEGSeriesWriterCallback(self.testfileprefix), interval=1)
+        self.capturer = VideoCapturer(JPEGSeriesWriterCallback(self.testfileprefix), interval = 0.2)
     
     def test(self):
         self.capturer.startCapturing()
-        time.sleep(5)
+        time.sleep(1)
         try:
             with open(self.testfileprefix + "000" + ".jpg"): pass
             with open(self.testfileprefix + "001" + ".jpg"): pass
