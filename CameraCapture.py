@@ -5,9 +5,13 @@ import time
 class VideoCapturer:
     def __init__(self, callback):
         self.callback = callback
-    
+        self.capture = cv.CreateCameraCapture(0)
+        self.width = int(cv.GetCaptureProperty(self.capture, cv.CV_CAP_PROP_FRAME_WIDTH))
+        self.height = int(cv.GetCaptureProperty(self.capture, cv.CV_CAP_PROP_FRAME_HEIGHT))
+           
     def startCapturing(self):
-        pass
+        img = cv.QueryFrame(self.capture)
+        self.callback(img)
 
     def finishCapturing(self):
         pass

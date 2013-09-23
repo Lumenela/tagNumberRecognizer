@@ -2,7 +2,7 @@ import cv
 
 class JPEGWriterCallback:
     def __init__(self, filename):
-        pass
+        self.filename = filename
 
     def __call__(self, image):
-        pass
+        cv.SaveImage(self.filename, image)
