@@ -1,20 +1,21 @@
 import cv
 import time
-
+from threading import Timer
 
 class VideoCapturer:
-    def __init__(self, callback):
+    def __init__(self, callback, interval=0):
         self.callback = callback
+        self.interval = interval
         self.capture = cv.CreateCameraCapture(0)
         self.width = int(cv.GetCaptureProperty(self.capture, cv.CV_CAP_PROP_FRAME_WIDTH))
         self.height = int(cv.GetCaptureProperty(self.capture, cv.CV_CAP_PROP_FRAME_HEIGHT))
            
     def startCapturing(self):
-        img = cv.QueryFrame(self.capture)
-        self.callback(img)
+        self.timer = Timer(self.interval, self.callback, [self.capture])
+        self.timer.start()
 
     def finishCapturing(self):
-        pass
+        self.timer.cancel()
 
 if __name__ == "__main__":
     cv.NamedWindow("camera", 1)
@@ -35,7 +36,9 @@ if __name__ == "__main__":
 
     while True:
         img = cv.QueryFrame(capture)
+        #time.sleep(1)
         cv.ShowImage("camera", img)
         k = cv.WaitKey(10);
-        if k == 'f':
+        if k == -1:
+            cv.DestroyWindow("camera")
             break
