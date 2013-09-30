@@ -37,7 +37,8 @@ class VideoCapturer:
         self.timer.start()
 
     def finishCapturing(self):
-        self.stopped.set()
+        #self.stopped.set()
+		pass
 
 if __name__ == "__main__":
     cv.NamedWindow("camera", 1)

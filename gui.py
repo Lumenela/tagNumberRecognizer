@@ -1,4 +1,5 @@
 import cv
+import cv2
 import sys
 from PyQt4 import QtGui
 from PyQt4.QtGui import QImage
@@ -26,8 +27,8 @@ class Frame(QtGui.QMainWindow):
 
         self.capturer = VideoCapturer(self)
 
-        width = int(cv.GetCaptureProperty(self.capturer.getCapture(), cv.CV_CAP_PROP_FRAME_WIDTH))
-        height = int(cv.GetCaptureProperty(self.capturer.getCapture(), cv.CV_CAP_PROP_FRAME_HEIGHT))
+        width = int(cv.GetCaptureProperty(self.capturer.capture, cv.CV_CAP_PROP_FRAME_WIDTH))
+        height = int(cv.GetCaptureProperty(self.capturer.capture, cv.CV_CAP_PROP_FRAME_HEIGHT))
         self.resize(width, height)
 
         self.reloadImage()
@@ -36,10 +37,12 @@ class Frame(QtGui.QMainWindow):
         video()
 
     def reloadImage(self):
-        img = cv.QueryFrame(self.capturer.getCapture())
+		
+        img = cv.QueryFrame(self.capturer.capture)
 
         palette = QPalette()
         qimage = QImage(img.tostring(), img.width, img.height, QImage.Format_RGB888).rgbSwapped()
+        #qimage = cv2.cvtColor( qimage, cv2.COLOR_RGB2GRAY )
         palette.setBrush(QPalette.Background,QBrush(qimage))
         
         self.setPalette(palette)
